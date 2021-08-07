@@ -1,9 +1,8 @@
-import { Card, Image, Button, GridColumn } from "semantic-ui-react";
-import { useState } from "react";
+import { Card, Image, GridColumn } from "semantic-ui-react";
+
 import Model from "./Model";
 
 function Item() {
-  const [open, setOpen] = useState(false);
   return (
     <GridColumn style={{ marginBottom: "20px" }}>
       <Card fluid>
@@ -16,7 +15,7 @@ function Item() {
           <Card.Description>Description</Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <Model open={open} setOpen={setOpen} />
+          <Model />
         </Card.Content>
       </Card>
     </GridColumn>

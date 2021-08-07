@@ -1,6 +1,8 @@
 import { Button, Header, Image, Modal } from "semantic-ui-react";
+import { useState } from "react";
 
-function Model({ open, setOpen }) {
+function Model() {
+  const [open, setOpen] = useState(false);
   return (
     <Modal
       onClose={() => setOpen(false)}
