@@ -7,12 +7,12 @@ function Navbar() {
   return (
     <nav className={styles.nav}>
       <div className={styles.left}>
-        <div className={styles.logo}>LOGO</div>
+        <Link to="/">
+          <div className={styles.logo}>LOGO</div>
+        </Link>
         <ul className={styles.menu}>
           <li>
-            <Link to="/" exact>
-              Home
-            </Link>
+            <Link to="/Products">Products</Link>
           </li>
         </ul>
       </div>
