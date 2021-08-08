@@ -11,7 +11,6 @@ function Login() {
           control="Input"
           placeholder="Username"
         />
-
         <Form.Field
           id="form-control-pass"
           label="Password"

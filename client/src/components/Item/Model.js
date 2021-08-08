@@ -1,7 +1,8 @@
 import { Button, Header, Image, Modal } from "semantic-ui-react";
 import { useState } from "react";
+import "./styles.css";
 
-function Model() {
+function Model({ data }) {
   const [open, setOpen] = useState(false);
   return (
     <Modal
@@ -13,14 +14,15 @@ function Model() {
           Inspect
         </Button>
       }
+      Header={"Add to Basket"}
     >
       <Modal.Header>Add to Basket</Modal.Header>
       <Modal.Content image>
-        <Image size="medium" src="http://lorempixel.com/400/200" wrapped />
+        <Image size="medium" src={data.image} wrapped />
         <Modal.Description>
-          <Header>Title</Header>
-          <p>Description</p>
-          <p>Price</p>
+          <Header>{data.title}</Header>
+          <p>{data.description}</p>
+          <p className="Price">{data.price}₺</p>
         </Modal.Description>
       </Modal.Content>
       <Modal.Actions>

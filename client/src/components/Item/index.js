@@ -1,23 +1,18 @@
 import { Card, Image, GridColumn } from "semantic-ui-react";
+import "./styles.css";
 
 import Model from "./Model";
 
-function Item() {
+function Item({ data }) {
   return (
     <GridColumn style={{ marginBottom: "20px" }}>
-      <Card fluid>
-        <Image src="http://lorempixel.com/400/200" wrapped ui={false} />
-        <Card.Content>
-          <Card.Header>Title</Card.Header>
-          <Card.Meta>
-            <span className="date">Release Date</span>
-          </Card.Meta>
-          <Card.Description>Description</Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-          <Model />
-        </Card.Content>
-      </Card>
+      <Card
+        image={<Image src={data.image} id="ProductsImage"></Image>}
+        header={data.title}
+        meta={"12/12/2021"}
+        description={data.price + " ₺"}
+        extra={<Model data={data} />}
+      />
     </GridColumn>
   );
 }
