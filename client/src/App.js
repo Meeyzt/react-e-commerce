@@ -5,8 +5,10 @@ import Register from "./components/pages/Auth/Register";
 import "semantic-ui-css/semantic.min.css";
 import Products from "./components/pages/Products";
 import { QueryClient, QueryClientProvider } from "react-query";
+
 function App() {
   const queryClient = new QueryClient();
+
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
