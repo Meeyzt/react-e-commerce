@@ -9,6 +9,7 @@ function Model({ data }) {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
+      dimmer="blurring"
       trigger={
         <Button fluid color={"black"}>
           Inspect
