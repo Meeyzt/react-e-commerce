@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Login from "./components/pages/Auth/Login";
 import Register from "./components/pages/Auth/Register";
+import Loading from "./components/Loading";
 import "semantic-ui-css/semantic.min.css";
 import Products from "./components/pages/Products";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -24,6 +25,7 @@ function App() {
           <Route path="/Products" exact component={Products} />
           <Route path="/Login" component={Login} />
           <Route path="/Register" component={Register} />
+          <Route path="/Loading" component={Loading} />
         </Switch>
       </Router>
     </QueryClientProvider>
