@@ -6,6 +6,7 @@ import Loading from "./components/Loading";
 import "semantic-ui-css/semantic.min.css";
 import Products from "./components/pages/Products";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { db, auth, storageRef } from "./firebase/firebase";
 
 function App() {
   const queryClient = new QueryClient();
