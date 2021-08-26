@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { auth } from "../firebase/firebase";
+import { auth, db } from "../firebase/firebase";
 
 const AuthContext = React.createContext();
 
@@ -9,12 +9,21 @@ export const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(true);
 
   useEffect(() => {
-    auth.AuthStateChanged((user) => {
+    auth.onAuthStateChanged(async (user) => {
       setCurrentUser(user);
       setLoading(false);
+      if (currentUser) {
+        const uid = currentUser.uid;
+        const userIsAdmin = await (
+          await db.collection("Users").doc(uid).get()
+        ).data().role;
+        if (userIsAdmin === "admin") {
+          setIsAdmin(true);
+          console.log("admin girişi");
+        }
+      }
     });
-    //TODO: currentUser isAdmin?
-  }, []);
+  }, [currentUser]);
   if (loading) {
     return <p>Loading...</p>;
   }
