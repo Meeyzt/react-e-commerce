@@ -2,8 +2,10 @@ import React from "react";
 import styles from "./styles.module.css";
 import { Link } from "react-router-dom";
 import { Button } from "semantic-ui-react";
+import { useAuth } from "../../contexts/AuthContext";
 
 function Navbar() {
+  const { currentUser, isAdmin } = useAuth();
   return (
     <nav className={styles.nav}>
       <div className={styles.left}>
@@ -17,12 +19,28 @@ function Navbar() {
         </ul>
       </div>
       <div className={styles.right}>
-        <Link to="/Login">
-          <Button primary>Login</Button>
-        </Link>
-        <Link to="/Register">
-          <Button secondary>Register</Button>
-        </Link>
+        {currentUser ? (
+          <span>
+            <Link to="/profile">
+              <Button primary>Profile</Button>
+            </Link>
+
+            {isAdmin && (
+              <Link to="/admin">
+                <Button secondary>Admin</Button>
+              </Link>
+            )}
+          </span>
+        ) : (
+          <span>
+            <Link to="/Login">
+              <Button primary>Login</Button>
+            </Link>
+            <Link to="/Register">
+              <Button secondary>Register</Button>
+            </Link>
+          </span>
+        )}
       </div>
     </nav>
   );
