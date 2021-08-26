@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Input, Checkbox, Container, Form } from "semantic-ui-react";
 import styles from "./styles.module.css";
 import { auth } from "../../../firebase/firebase";
+import { Link } from "react-router-dom";
 
 function Login() {
   const handleSubmit = (e) => {
@@ -34,8 +35,11 @@ function Login() {
           placeholder="Password"
           control={Input}
         />
-        <Form.Field label="Don't forget me" control={Checkbox} />
+        <div className={styles.rgstr}>
+          Hesabın yok mu ?<Link to="register"> Kayıt ol</Link>
+        </div>
 
+        <br />
         <Button type="submit" primary>
           Login
         </Button>
