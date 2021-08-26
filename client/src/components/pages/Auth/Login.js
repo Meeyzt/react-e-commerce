@@ -1,18 +1,22 @@
 import React from "react";
-import { Button, Input, Checkbox, Container, Form } from "semantic-ui-react";
+import { Button, Input, Container, Form } from "semantic-ui-react";
 import styles from "./styles.module.css";
 import { auth } from "../../../firebase/firebase";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../../contexts/AuthContext";
 
 function Login() {
+  const { setCurrentUser, currentUser } = useAuth();
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = e.target.elements;
     try {
       auth
         .signInWithEmailAndPassword(email.value, password.value)
+        .then((userRecord) => {
+          setCurrentUser(userRecord.user);
+        })
         .catch((e) => console.log("Register error:", e.message));
-      console.log("Login Success");
     } catch (error) {
       console.log("Login", error);
     }
