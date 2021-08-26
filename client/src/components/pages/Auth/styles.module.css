@@ -5,3 +5,11 @@
   border-radius: 30px;
   padding: 20px;
 }
+.rgstr {
+  color: white;
+  font-weight: lighter;
+}
+.rgstr > a {
+  color: wheat;
+  font-weight: bold;
+}
