@@ -5,20 +5,18 @@ import { useAuth } from "../../contexts/AuthContext";
 function AdminRoute({ children, ...rest }) {
   const { isAdmin } = useAuth();
   return (
-    <div>
-      <Route
-        {...rest}
-        render={() =>
-          isAdmin === true ? (
-            { children }
-          ) : (
-            <div>
-              <p style={{ fontWeight: "bold" }}>You're not admin</p>
-            </div>
-          )
-        }
-      />
-    </div>
+    <Route
+      {...rest}
+      render={({ location }) =>
+        isAdmin ? (
+          children
+        ) : (
+          <div>
+            <p style={{ fontWeight: "bold" }}>You're not admin</p>
+          </div>
+        )
+      }
+    />
   );
 }
 
