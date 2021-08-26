@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import ListUsers from "./components/pages/Admin/ListUsers";
 import LoginRoute from "./components/PrivateRoute/LoginRoute";
 import AdminRoute from "./components/PrivateRoute/AdminRoute";
+import Admin from "./components/pages/Admin";
 
 function App() {
   const queryClient = new QueryClient();
@@ -35,6 +36,9 @@ function App() {
           <Route path="/Loading" component={Loading} />
           <AdminRoute path="/Admin/ListUsers">
             <ListUsers />
+          </AdminRoute>
+          <AdminRoute path="/Admin">
+            <Admin />
           </AdminRoute>
         </Switch>
       </Router>
