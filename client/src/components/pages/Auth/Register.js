@@ -25,17 +25,17 @@ function Register() {
               username.value = "";
               password.value = "";
               confirmPassword.value = "";
-              AddUser(user.uid, user.username);
+              AddUser(user.uid, user.username, photoURL);
             });
         });
     } else {
       alert("Passwords not match");
     }
   };
-  const AddUser = (uid, username) => {
+  const AddUser = (uid, username, photoURL) => {
     const addUserRef = db.collection("Users").doc(uid);
     addUserRef
-      .set({ role: "user", username: username })
+      .set({ role: "user", username: username, profilePhoto: photoURL })
       .then(() => console.log("user registered"))
       .catch((error) => console.log(error));
   };

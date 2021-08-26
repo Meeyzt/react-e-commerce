@@ -12,6 +12,7 @@ const GetUsers = () => {
             id: t.id,
             role: t.data().role,
             username: t.data().username,
+            profilePhoto: t.data().profilePhoto,
           }))
         );
         console.log(users);

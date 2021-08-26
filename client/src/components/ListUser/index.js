@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 function Index({ data }) {
   return (
     <List.Item>
-      <Image avatar src="/images/avatar/small/lena.png" />
+      <Image avatar src={data.profilePhoto} />
       <List.Content>
         <List.Header>{data.username}</List.Header>
         {data.role}
