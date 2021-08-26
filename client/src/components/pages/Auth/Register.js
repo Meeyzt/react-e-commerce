@@ -1,16 +1,13 @@
 import React from "react";
 import { Button, Input, Checkbox, Container, Form } from "semantic-ui-react";
 import styles from "./styles.module.css";
-import { auth } from "../../../firebase/firebase";
+import { auth, db } from "../../../firebase/firebase";
 import { Link } from "react-router-dom";
 
 function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { email, username, phoneNumber, password, confirmPassword } =
-      e.target.elements;
-    console.log(e.target.elements.value);
-    const emailVerified = process.env.REACT_APP_EMAIL_VERIFIED;
+    const { email, username, password, confirmPassword } = e.target.elements;
     const photoURL =
       "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png";
     if (confirmPassword.value === password.value) {
@@ -20,20 +17,27 @@ function Register() {
           const user = auth.currentUser;
           user
             .updateProfile({
-              phoneNumber: phoneNumber,
-              emailVerified: true,
               displayName: username.value,
               photoURL: photoURL,
             })
-            .then(() => console.log("then \n", user));
-          user
-            .updatePhoneNumber("55555555555")
-            .then((userRecord) => console.log(userRecord))
-            .catch((e) => console.log(e));
+            .then(() => {
+              email.value = "";
+              username.value = "";
+              password.value = "";
+              confirmPassword.value = "";
+              AddUser(user.uid);
+            });
         });
     } else {
       alert("Passwords not match");
     }
+  };
+  const AddUser = (uid) => {
+    const addUserRef = db.collection("Users").doc(uid);
+    addUserRef
+      .set({ role: "user" })
+      .then(() => console.log("user registered"))
+      .catch((error) => console.log(error));
   };
   return (
     <Container className={styles.cntr}>
@@ -45,7 +49,7 @@ function Register() {
             name="username"
             control={Input}
             placeholder="Username"
-            value="Mmmm"
+            value="Meeyzt"
           />
           <Form.Field
             id="form-input-control-email"
@@ -56,15 +60,6 @@ function Register() {
             placeholder="info@e-commerce.com"
             value="meeyzt@gmail.com"
           />
-          {/* <Form.Field
-            id="form-input-control-phone"
-            label="Phone Number"
-            type="tel"
-            name="phoneNumber"
-            control={Input}
-            placeholder="(555) 555-55-55"
-            value="12345678901"
-          /> */}
         </Form.Group>
         <Form.Group widths="equal">
           <Form.Field
