@@ -7,13 +7,16 @@ function LoginRoute({ children, ...rest }) {
   return (
     <Route
       {...rest}
-      render={({ location }) =>
-        currentUser === true ? (
-          children
-        ) : (
-          <Redirect to={{ pathname: "/login", state: { from: location } }} />
-        )
-      }
+      render={({ location }) => {
+        if (currentUser) {
+          console.log(location);
+          return children;
+        } else {
+          return (
+            <Redirect to={{ pathname: "/login", state: { from: location } }} />
+          );
+        }
+      }}
     />
   );
 }
