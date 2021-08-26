@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
 
 function Login() {
-  const { setCurrentUser, currentUser } = useAuth();
+  const { setCurrentUser } = useAuth();
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = e.target.elements;
