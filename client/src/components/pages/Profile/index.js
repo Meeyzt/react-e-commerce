@@ -6,10 +6,11 @@ import Extra from "./Extra";
 
 function Index() {
   const [user, setUser] = useState({});
+  const photoURL =
+    "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png";
   useEffect(() => {
     const getData = async () => {
       const currentUser = auth.currentUser;
-      console.log(currentUser);
       await setUser({
         username: currentUser.displayName,
         photoURL: currentUser.photoURL,
@@ -26,7 +27,7 @@ function Index() {
       <div id={styles.content}>
         <Card
           id={styles.card}
-          image={user.photoURL}
+          image={user.photoURL === null ? photoURL : user.photoURL}
           header={user.username}
           meta={user.mail}
           extra={<Extra user={user} />}
