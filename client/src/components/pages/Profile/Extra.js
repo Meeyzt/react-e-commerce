@@ -22,9 +22,7 @@ function Extra({ user }) {
       console.error(`not an image, the image file is a ${typeof imageAsFile}`);
       return null;
     }
-    const uploadTask = storage
-      .ref(`/images/${user.id + images.name}`)
-      .put(images);
+    const uploadTask = storage.ref(`/images/${user.id}`).put(images);
 
     uploadTask.on(
       "state_changed",
@@ -35,7 +33,7 @@ function Extra({ user }) {
         console.log(error);
       },
       () => {
-        const imagename = user.id + images.name;
+        const imagename = user.id;
         storage
           .ref("images")
           .child(imagename)
@@ -46,6 +44,7 @@ function Extra({ user }) {
               imgUrl: firebaseUrl,
             }));
           });
+        console.log(imageURL);
         auth.currentUser
           .updateProfile({
             displayName: auth.currentUser.displayName,

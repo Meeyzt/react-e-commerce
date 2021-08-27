@@ -9,6 +9,7 @@ function Index() {
   useEffect(() => {
     const getData = async () => {
       const currentUser = auth.currentUser;
+      console.log(currentUser);
       await setUser({
         username: currentUser.displayName,
         photoURL: currentUser.photoURL,
