@@ -4,6 +4,7 @@ import { auth, storage } from "../../../firebase/firebase";
 import styles from "./styles.module.css";
 
 function Extra({ user }) {
+  const [loading, setLoading] = useState(false);
   const includeInput = { imgUrl: "" };
   const [images, setImages] = useState("");
   const [imageURL, setImageURL] = useState(includeInput);
@@ -17,9 +18,11 @@ function Extra({ user }) {
     }
   };
   const handleUpload = (e) => {
+    setLoading(true);
     console.log("upload starting...");
     if (images === "") {
       console.error(`not an image, the image file is a ${typeof imageAsFile}`);
+      setLoading(false);
       return null;
     }
     const uploadTask = storage.ref(`/images/${user.id}`).put(images);
@@ -27,10 +30,10 @@ function Extra({ user }) {
     uploadTask.on(
       "state_changed",
       (snapShot) => {
-        console.log(snapShot);
+        //console.log(snapShot);
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       },
       () => {
         const imagename = user.id;
@@ -44,7 +47,6 @@ function Extra({ user }) {
               imgUrl: firebaseUrl,
             }));
           });
-        console.log(imageURL);
         auth.currentUser
           .updateProfile({
             displayName: auth.currentUser.displayName,
@@ -52,6 +54,7 @@ function Extra({ user }) {
           })
           .then(() => {
             console.log("image Upload success");
+            setLoading(false);
           });
       }
     );
@@ -64,9 +67,16 @@ function Extra({ user }) {
         type="file"
         onChange={(e) => handleChange(e)}
       />
-      <Button id={styles.uploadBtn} onClick={(e) => handleUpload(e)}>
-        Change Photo
-      </Button>
+      {loading ? (
+        <Button disabled id={styles.uploadBtn} onClick={(e) => handleUpload(e)}>
+          Change Photo
+        </Button>
+      ) : (
+        <Button id={styles.uploadBtn} onClick={(e) => handleUpload(e)}>
+          Change Photo
+        </Button>
+      )}
+
       <Button id={styles.profileBtn} onClick={() => onClickHandler()}>
         Sign Out
       </Button>
