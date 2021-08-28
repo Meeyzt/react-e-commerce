@@ -13,8 +13,8 @@ function Register() {
     if (confirmPassword.value === password.value) {
       auth
         .createUserWithEmailAndPassword(email.value, password.value)
-        .then(() => {
-          const user = auth.currentUser;
+        .then((userRecord) => {
+          const user = userRecord.user;
           user
             .updateProfile({
               displayName: username.value,
@@ -25,19 +25,20 @@ function Register() {
               username.value = "";
               password.value = "";
               confirmPassword.value = "";
-              AddUser(user.uid, user.username, photoURL);
+              const addUserRef = db.collection("Users").doc(user.uid);
+              addUserRef
+                .set({
+                  role: "user",
+                  username: user.displayName,
+                  profilePhoto: photoURL,
+                })
+                .then(() => console.log("user registered"))
+                .catch((error) => console.log(error));
             });
         });
     } else {
       alert("Passwords not match");
     }
-  };
-  const AddUser = (uid, username, photoURL) => {
-    const addUserRef = db.collection("Users").doc(uid);
-    addUserRef
-      .set({ role: "user", username: username, profilePhoto: photoURL })
-      .then(() => console.log("user registered"))
-      .catch((error) => console.log(error));
   };
   return (
     <Container className={styles.cntr}>
