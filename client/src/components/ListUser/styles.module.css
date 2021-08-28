@@ -1,8 +1,7 @@
-#updateBtn {
-  background-color: #c9560a;
-  color: white;
-}
 #deleteBtn {
   background-color: #d12f2a;
   color: white;
+}
+.rightContent {
+  display: flex;
 }

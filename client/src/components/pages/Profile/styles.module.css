@@ -36,4 +36,5 @@
 #uploadBtn {
   color: white;
   background-color: rgba(41, 3, 41, 0.493);
+  width: 100%;
 }
