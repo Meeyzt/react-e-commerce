@@ -6,7 +6,7 @@ import {
   Label,
   Segment,
 } from "semantic-ui-react";
-import styles from "./styles.module.css";
+import styles from "../styles.module.css";
 import Product from "./Product";
 
 function AddProduct() {

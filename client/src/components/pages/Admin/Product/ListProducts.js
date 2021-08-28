@@ -1,8 +1,8 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../../contexts/AuthContext";
 
-function UpdateUsers() {
+function ListProducts() {
   const { isAdmin } = useAuth();
   if (!isAdmin) {
     return <Redirect to="/" />;
@@ -10,4 +10,4 @@ function UpdateUsers() {
   return <div></div>;
 }
 
-export default UpdateUsers;
+export default ListProducts;

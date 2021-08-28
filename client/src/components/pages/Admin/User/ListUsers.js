@@ -1,6 +1,6 @@
 import { Segment, List } from "semantic-ui-react";
-import ListUser from "../../ListUser";
-import GetUsers from "../../../services/GetUsers";
+import ListUser from "../../../ListUser";
+import GetUsers from "../../../../services/GetUsers";
 
 function ListUsers() {
   const { users } = GetUsers();

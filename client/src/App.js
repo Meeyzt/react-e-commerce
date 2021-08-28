@@ -7,11 +7,11 @@ import "semantic-ui-css/semantic.min.css";
 import Products from "./components/pages/Products";
 import Profile from "./components/pages/Profile";
 import { QueryClient, QueryClientProvider } from "react-query";
-import ListUsers from "./components/pages/Admin/ListUsers";
+import ListUsers from "./components/pages/Admin/User/ListUsers";
 import LoginRoute from "./components/PrivateRoute/LoginRoute";
 import AdminRoute from "./components/PrivateRoute/AdminRoute";
 import Admin from "./components/pages/Admin";
-import AddProduct from "./components/pages/Admin/AddProduct";
+import AddProduct from "./components/pages/Admin/Product/AddProduct";
 
 function App() {
   const queryClient = new QueryClient();
