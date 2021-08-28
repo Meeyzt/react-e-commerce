@@ -9,7 +9,6 @@ function LoginRoute({ children, ...rest }) {
       {...rest}
       render={({ location }) => {
         if (currentUser) {
-          console.log(location);
           return children;
         } else {
           return (

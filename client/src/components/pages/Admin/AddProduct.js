@@ -7,7 +7,6 @@ import {
   Segment,
 } from "semantic-ui-react";
 import styles from "./styles.module.css";
-import { useState } from "react";
 import Product from "./Product";
 
 function AddProduct() {

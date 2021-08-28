@@ -6,6 +6,7 @@ import Extra from "./Extra";
 
 function Index() {
   const [user, setUser] = useState({});
+
   const photoURL =
     "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png";
   useEffect(() => {
@@ -20,7 +21,6 @@ function Index() {
     };
     getData();
   }, []);
-  console.log(user);
   return (
     <Segment id={styles.main} inverted>
       <h1>Profile</h1>
