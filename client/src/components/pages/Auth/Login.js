@@ -2,11 +2,20 @@ import React from "react";
 import { Button, Input, Container, Form } from "semantic-ui-react";
 import styles from "./styles.module.css";
 import { auth } from "../../../firebase/firebase";
-import { Link } from "react-router-dom";
+import {
+  Link,
+  Redirect,
+  Route,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
 
 function Login() {
   const { setCurrentUser } = useAuth();
+  let history = useHistory();
+  let location = useLocation();
+  let { from } = location.state || { from: { pathname: "/" } };
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = e.target.elements;
@@ -15,8 +24,19 @@ function Login() {
         .signInWithEmailAndPassword(email.value, password.value)
         .then((userRecord) => {
           setCurrentUser(userRecord.user);
+          console.log("login success");
+          history.replace(from);
+          return (
+            <Route
+              render={({ location }) => (
+                <Redirect
+                  to={{ pathname: "/profile", state: { from: location } }}
+                />
+              )}
+            ></Route>
+          );
         })
-        .catch((e) => console.log("Register error:", e.message));
+        .catch((e) => console.log("Login error:", e.message));
     } catch (error) {
       console.log("Login", error);
     }
