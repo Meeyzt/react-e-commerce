@@ -1,15 +1,16 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Button, Input, Label } from "semantic-ui-react";
-import { auth, storage } from "../../../firebase/firebase";
+import { auth, db, storage } from "../../../firebase/firebase";
 import styles from "./styles.module.css";
 
-function Extra({ user }) {
+function Extra() {
+  let history = useHistory();
+  const user = auth.currentUser;
   const [loading, setLoading] = useState(false);
-  const includeInput = { imgUrl: "" };
   const [images, setImages] = useState("");
-  const [imageURL, setImageURL] = useState(includeInput);
   const onClickHandler = () => {
-    auth.signOut();
+    auth.signOut().then(() => history.push("/"));
   };
 
   const handleChange = async (e) => {
@@ -25,7 +26,7 @@ function Extra({ user }) {
       setLoading(false);
       return null;
     }
-    const uploadTask = storage.ref(`/images/${user.id}`).put(images);
+    const uploadTask = storage.ref(`/images/${user.uid}`).put(images);
 
     uploadTask.on(
       "state_changed",
@@ -36,29 +37,33 @@ function Extra({ user }) {
         console.error(error);
       },
       () => {
-        const imagename = user.id;
+        const imagename = user.uid;
         storage
           .ref("images")
           .child(imagename)
           .getDownloadURL()
           .then(async (firebaseUrl) => {
-            await setImageURL((prevObject) => ({
-              ...prevObject,
-              imgUrl: firebaseUrl,
-            }));
-          });
-        auth.currentUser
-          .updateProfile({
-            displayName: auth.currentUser.displayName,
-            photoURL: imageURL.imgUrl,
+            user
+              .updateProfile({
+                displayName: user.displayName,
+                photoURL: firebaseUrl,
+              })
+              .then(() => {
+                db.collection("Users")
+                  .doc(user.uid)
+                  .update({ profilePhoto: firebaseUrl })
+                  .then(() => {
+                    console.log("image Upload success");
+                    setLoading(false);
+                  });
+              })
+              .catch((err) => console.log("Update Profile: ", err));
           })
-          .then(() => {
-            console.log("image Upload success");
-            setLoading(false);
-          });
+          .catch((err) => console.log("ImageURL: ", err));
       }
     );
   };
+
   return (
     <div id={styles.extra}>
       <Label id={styles.changePhoto}>Select Photo</Label>
@@ -69,7 +74,7 @@ function Extra({ user }) {
       />
       {loading ? (
         <Button disabled id={styles.uploadBtn} onClick={(e) => handleUpload(e)}>
-          Change Photo
+          Uploading...
         </Button>
       ) : (
         <Button id={styles.uploadBtn} onClick={(e) => handleUpload(e)}>
