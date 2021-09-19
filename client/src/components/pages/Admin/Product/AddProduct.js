@@ -19,7 +19,7 @@ function AddProduct() {
     price: "",
     date: date,
   };
-  const [photo, setPhoto] = useState("");
+  const [photo, setPhoto] = useState([{}]);
   const [values, setValues] = useState(initialState);
 
   const onChangeHandler = (e) => {
@@ -32,7 +32,7 @@ function AddProduct() {
     const reader = new FileReader();
 
     reader.addEventListener("load", function () {
-      setPhoto(this.result);
+      setPhoto([...photo, { photo: this.result }]);
     });
     reader.readAsDataURL(file);
   };
@@ -66,6 +66,13 @@ function AddProduct() {
                   <Label basic>₺</Label>
                 </Input>
               </Form.Group>
+              {photo > 1 && (
+                <Form.Group>
+                  {photo.map((item, key) => {
+                    <div key={key}>{item}</div>;
+                  })}
+                </Form.Group>
+              )}
             </Form.Group>
             <label id={styles.productPhoto}>
               <span>Add Photo</span>
