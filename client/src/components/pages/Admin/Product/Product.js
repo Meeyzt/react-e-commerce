@@ -1,18 +1,31 @@
-import { Card, Placeholder, Button } from "semantic-ui-react";
+import { useEffect } from "react";
+import { Card, Placeholder, Image } from "semantic-ui-react";
+import Model from "../../../Item/Model";
 
-function Product({ data }) {
+function Product({ data, photo }) {
+  const value = {
+    title: data.title,
+    price: data.price,
+    image: photo,
+    data: data.date,
+  };
+  useEffect(() => {}, [data]);
   return (
     <Card
       inverted
       image={
-        <Placeholder>
-          <Placeholder.Image square />
-        </Placeholder>
+        photo ? (
+          <Image src={photo} id="ProductsImage"></Image>
+        ) : (
+          <Placeholder>
+            <Placeholder.Image square />
+          </Placeholder>
+        )
       }
-      header="{data.title}"
-      meta={"12/12/2021"}
-      description={`data.price + " ₺"`}
-      extra={<Button fluid color={"black"} content="Inspect" />}
+      header={data.title}
+      meta={data.date}
+      description={data.price + " ₺"}
+      extra={<Model data={value} />}
     />
   );
 }
