@@ -25,9 +25,33 @@
   text-align: center;
   justify-content: center;
 }
-#priceText {
-  height: 39px;
-  margin-top: 22px;
+#productPhoto > input {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+}
+#productPhoto > span {
+  position: block;
+  color: white;
+  background-color: rgb(61, 58, 58);
+  font-weight: 900;
+  padding: 5px;
+  border-radius: 3px;
+  box-shadow: 6px 6px 9px 0px rgba(0, 0, 0, 0.5);
+  margin-bottom: 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.priceText {
+  height: 30px;
+}
+#priceGroup {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
 }
 #updateBtn {
   background-color: #c9560a;
