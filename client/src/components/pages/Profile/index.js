@@ -5,6 +5,7 @@ import Extra from "./Extra";
 
 function Index() {
   const user = auth.currentUser;
+  console.log(user);
   const photoURL =
     "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png";
   return (
@@ -14,8 +15,8 @@ function Index() {
         <Card
           id={styles.card}
           image={user.photoURL === null ? photoURL : user.photoURL}
-          header={user.username}
-          meta={user.mail}
+          header={user.displayName}
+          meta={user.email}
           extra={<Extra />}
         />
       </div>

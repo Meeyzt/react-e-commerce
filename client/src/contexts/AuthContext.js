@@ -9,15 +9,20 @@ export const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    //TODO: yoksa bulamıyorsa user olarak döndür..
     auth.onAuthStateChanged(async (user) => {
       setCurrentUser(user);
       setLoading(false);
       if (!(currentUser === null)) {
         const uid = currentUser.uid;
-        const userIsAdmin = await (
-          await db.collection("Users").doc(uid).get()
-        ).data().role;
-        if (userIsAdmin === "admin") {
+        let userRole = "";
+        try {
+          userRole = await (await db.collection("Users").doc(uid).get()).data()
+            .role;
+        } catch (e) {
+          userRole = "user";
+        }
+        if (userRole === "admin") {
           setIsAdmin(true);
         }
       }

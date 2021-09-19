@@ -2,39 +2,64 @@ import React from "react";
 import { Button, Input, Checkbox, Container, Form } from "semantic-ui-react";
 import styles from "./styles.module.css";
 import { auth, db } from "../../../firebase/firebase";
-import { Link } from "react-router-dom";
+import {
+  Link,
+  Redirect,
+  Route,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 
 function Register() {
+  let history = useHistory();
+  let location = useLocation();
+  let { from } = location.state || { from: { pathname: "/" } };
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, username, password, confirmPassword } = e.target.elements;
     const photoURL =
       "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png";
+
     if (confirmPassword.value === password.value) {
       auth
         .createUserWithEmailAndPassword(email.value, password.value)
         .then((userRecord) => {
           const user = userRecord.user;
-          user
-            .updateProfile({
-              displayName: username.value,
-              photoURL: photoURL,
+          const addUserRef = db.collection("Users").doc(user.uid);
+          addUserRef
+            .set({
+              role: "user",
+              username: user.displayName,
+              profilePhoto: photoURL,
             })
             .then(() => {
               email.value = "";
               username.value = "";
               password.value = "";
               confirmPassword.value = "";
-              const addUserRef = db.collection("Users").doc(user.uid);
-              addUserRef
-                .set({
-                  role: "user",
-                  username: user.displayName,
-                  profilePhoto: photoURL,
+              user
+                .updateProfile({
+                  displayName: username.value,
+                  photoURL: photoURL,
                 })
-                .then(() => console.log("user registered"))
-                .catch((error) => console.log(error));
-            });
+                .then(() => {
+                  console.log("user registered");
+                  history.replace("/profile");
+                  return (
+                    <Route
+                      render={({ location }) => (
+                        <Redirect
+                          to={{
+                            pathname: "/profile",
+                            state: { from: location },
+                          }}
+                        />
+                      )}
+                    />
+                  );
+                });
+            })
+            .catch((error) => console.log(error));
         });
     } else {
       alert("Passwords not match");
@@ -50,7 +75,6 @@ function Register() {
             name="username"
             control={Input}
             placeholder="Username"
-            value="Meeyzt"
           />
           <Form.Field
             id="form-input-control-email"
@@ -59,7 +83,6 @@ function Register() {
             label="Email"
             name="email"
             placeholder="info@e-commerce.com"
-            value="meeyzt@gmail.com"
           />
         </Form.Group>
         <Form.Group widths="equal">
@@ -70,7 +93,6 @@ function Register() {
             name="password"
             control={Input}
             placeholder="Password"
-            value="123456"
           />
           <Form.Field
             id="form-input-control-confirm-pass"
@@ -79,7 +101,6 @@ function Register() {
             name="confirmPassword"
             control={Input}
             placeholder="Confirm Password"
-            value="123456"
           />
         </Form.Group>
 

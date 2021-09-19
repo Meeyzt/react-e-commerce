@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import { Button, Dropdown, Header, Image, Modal } from "semantic-ui-react";
 import styles from "../styles.module.css";
 import getRoles from "../../../../services/GetRoles";
-import { auth, db } from "../../../../firebase/firebase";
+import { db } from "../../../../firebase/firebase";
 import { useHistory } from "react-router-dom";
 
 function UpdateUserModel({ data }) {
   const [open, setOpen] = useState(false);
   const [roleData, setRoleData] = useState("user");
   const { roles } = getRoles();
-  const user = auth.currentUser;
   const history = useHistory();
 
   return (
@@ -29,8 +28,11 @@ function UpdateUserModel({ data }) {
       <Modal.Content image>
         <Image size="medium" src={data.profilePhoto} wrapped />
         <Modal.Description>
-          <Header>Username</Header>
-          <p>{data.username}</p>
+          <Header>Username : {data.username}</Header>
+          <p>
+            Role <br />
+            {data.role}
+          </p>
           <br />
           <Dropdown
             fluid
@@ -55,7 +57,7 @@ function UpdateUserModel({ data }) {
           icon="checkmark"
           onClick={() => {
             db.collection("Users")
-              .doc(user.uid)
+              .doc(data.id)
               .update({ role: roleData })
               .then(() => {
                 history.push("/admin");
