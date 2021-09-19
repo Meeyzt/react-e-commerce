@@ -9,7 +9,7 @@ import {
 import styles from "../styles.module.css";
 import Product from "./Product";
 import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 function AddProduct() {
   const fileRef = useRef();

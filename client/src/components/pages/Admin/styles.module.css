@@ -57,3 +57,10 @@
   background-color: #c9560a;
   color: white;
 }
+#title {
+  color: white;
+}
+#dltBtn {
+  margin: 0;
+  padding: 8px 10px 8px 10px;
+}

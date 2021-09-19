@@ -12,6 +12,7 @@ import LoginRoute from "./components/PrivateRoute/LoginRoute";
 import AdminRoute from "./components/PrivateRoute/AdminRoute";
 import Admin from "./components/pages/Admin";
 import AddProduct from "./components/pages/Admin/Product/AddProduct";
+import ListProducts from "./components/pages/Admin/Product/ListProducts";
 
 function App() {
   const queryClient = new QueryClient();
@@ -40,6 +41,9 @@ function App() {
           </AdminRoute>
           <AdminRoute path="/Admin/addProduct">
             <AddProduct />
+          </AdminRoute>
+          <AdminRoute path="/Admin/listProduct">
+            <ListProducts />
           </AdminRoute>
           <AdminRoute path="/Admin">
             <Admin />
